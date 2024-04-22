@@ -13,7 +13,7 @@ class TetrisUI : Application() {
     private val game = TetrisGame()
 
     override fun start(mainWindow: Stage) {
-
+        //Начинаем писать код
     }
 }
 
