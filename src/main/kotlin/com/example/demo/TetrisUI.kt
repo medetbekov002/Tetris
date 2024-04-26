@@ -22,34 +22,31 @@ class TetrisUI : Application() {
         val timer = object : AnimationTimer() {
             override fun handle(now: Long) {
                 if (now - game.lastMove > TetrisGame.SPEED) {
-                    with(game) {
-                        lastMove = now
-                        update()
-                        draw(gc)
-                    }
+                    game.lastMove = now
+                    game.update()
+                    game.draw(gc)
                 }
             }
+
         }
         timer.start()
 
-        with(mainWindow) {
-            scene = Scene(borderPane)
-            title = "Tetris"
-            show()
-        }
+        val scene = Scene(borderPane)
+        mainWindow.scene = scene
+        mainWindow.title = "Tetris"
+        mainWindow.show()
 
-        mainWindow.scene.setOnKeyPressed { event ->
-            when (event.code) {
+        scene.setOnKeyPressed { click ->
+            when (click.code) {
                 LEFT -> game.moveLeft()
                 RIGHT -> game.moveRight()
                 DOWN -> game.moveDown()
                 UP -> game.rotatePiece()
                 else -> {
-                    with(Alert(Alert.AlertType.WARNING)) {
-                        title = "Error"
-                        contentText = "Incorrect key: ${event.code} Use keys only for game"
-                        showAndWait()
-                    }
+                    val alert = Alert(Alert.AlertType.WARNING)
+                    alert.title = "Error"
+                    alert.contentText = "Incorrect key: ${click.code} Use keys only for game"
+                    alert.showAndWait()
                 }
             }
         }
